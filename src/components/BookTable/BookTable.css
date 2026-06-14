@@ -1,0 +1,23 @@
+.book-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.book-table th,
+.book-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.book-table th {
+  background: #1e293b;
+  color: white;
+}
+
+.book-table button {
+  margin-right: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}

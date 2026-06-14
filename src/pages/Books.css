@@ -1,0 +1,28 @@
+.books-page {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.filter-row select {
+  min-width: 180px;
+}
+
+.modal-close {
+  width: 100%;
+  margin-top: 0.8rem;
+}
+
+@media (max-width: 620px) {
+  .filter-row,
+  .filter-row select,
+  .books-page .page-header button {
+    width: 100%;
+  }
+}

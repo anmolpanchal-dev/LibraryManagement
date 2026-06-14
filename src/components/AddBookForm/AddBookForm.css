@@ -1,0 +1,10 @@
+.add-book-form {
+  gap: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding-top: 0.35rem;
+}

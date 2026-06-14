@@ -1,0 +1,23 @@
+.members-page {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.member-avatar {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary), var(--blue));
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+@media (max-width: 620px) {
+  .members-page .page-header button {
+    width: 100%;
+  }
+}

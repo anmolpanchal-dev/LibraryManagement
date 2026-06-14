@@ -1,0 +1,132 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: var(--sidebar-width);
+  z-index: 30;
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.4rem;
+  background: rgba(248, 250, 252, 0.72);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(22px);
+  transition: left var(--transition-base);
+}
+
+.sidebar-collapsed .navbar {
+  left: var(--sidebar-collapsed);
+}
+
+body.dark .navbar {
+  background: rgba(2, 6, 23, 0.68);
+}
+
+.nav-menu {
+  display: none;
+}
+
+.nav-search {
+  position: relative;
+  flex: 1;
+  max-width: 620px;
+}
+
+.nav-search svg {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.nav-search input {
+  padding-left: 2.7rem;
+  border-radius: 999px;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.notification-button {
+  position: relative;
+}
+
+.notification-button span {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--danger);
+  box-shadow: 0 0 0 3px var(--surface-strong);
+}
+
+.profile-menu {
+  min-height: 48px;
+  padding: 0.35rem 0.5rem 0.35rem 0.4rem;
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.profile-avatar {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), var(--blue));
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.profile-copy {
+  display: grid;
+  text-align: left;
+  padding-right: 0.3rem;
+}
+
+.profile-copy strong {
+  font-size: 0.88rem;
+}
+
+.profile-copy small {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+}
+
+@media (max-width: 980px) {
+  .navbar,
+  .sidebar-collapsed .navbar {
+    left: 0;
+  }
+
+  .nav-menu {
+    display: inline-flex;
+  }
+
+  .nav-search {
+    max-width: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .navbar {
+    padding: 0 0.85rem;
+  }
+
+  .nav-search {
+    display: none;
+  }
+
+  .profile-copy {
+    display: none;
+  }
+}
