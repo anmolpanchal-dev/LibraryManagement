@@ -112,7 +112,7 @@ const Members = () => {
                       <span className="member-avatar">{initials(member.name)}</span>
                       <div>
                         <strong>{member.name}</strong>
-                        <span>ID #{member.id}</span>
+                        <span>ID #{member._id}</span>
                       </div>
                     </div>
                   );
@@ -129,7 +129,7 @@ const Members = () => {
                   <button className="btn-secondary btn-sm" onClick={() => setEditingMember(member)}>
                     <Edit3 size={15} /> Edit
                   </button>
-                  <button className="btn-danger btn-sm" onClick={() => handleDeleteMember(member.id)}>
+                  <button className="btn-danger btn-sm" onClick={() => handleDeleteMember(member._id)}>
                     <Trash2 size={15} /> Delete
                   </button>
                 </div>

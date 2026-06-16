@@ -16,7 +16,7 @@ const DataTable = ({ columns, data = [], renderActions, renderCell }) => {
         <tbody>
           {data.length > 0 ? (
             data.map((row) => (
-              <tr key={row.id}>
+              <tr key={row._id}>
                 {columns.map((col) => (
                   <td key={col.key}>
                     {renderCell ? renderCell(row, col) : row?.[col.key] ?? "-"}

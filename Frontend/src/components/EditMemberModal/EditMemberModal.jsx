@@ -7,7 +7,7 @@ const EditMemberModal = ({ editingMember, updateMember, closeModal }) => {
 
   return (
     <EditMemberForm
-      key={editingMember.id}
+      key={editingMember._id}
       editingMember={editingMember}
       updateMember={updateMember}
       closeModal={closeModal}
@@ -16,12 +16,12 @@ const EditMemberModal = ({ editingMember, updateMember, closeModal }) => {
 };
 
 const EditMemberForm = ({ editingMember, updateMember, closeModal }) => {
-  const [form, setForm] = useState(() => ({
-    name: editingMember.name || "",
-    email: editingMember.email || "",
-    phone: editingMember.phone || "",
-    id: editingMember.id,
-  }));
+const [form, setForm] = useState(() => ({
+  _id: editingMember._id,
+  name: editingMember.name || "",
+  email: editingMember.email || "",
+  phone: editingMember.phone || "",
+}));
 
   const handleChange = (e) => {
     setForm((current) => ({ ...current, [e.target.name]: e.target.value }));
@@ -29,6 +29,7 @@ const EditMemberForm = ({ editingMember, updateMember, closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(form);
     updateMember(form);
   };
 

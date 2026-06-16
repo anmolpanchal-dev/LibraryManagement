@@ -14,7 +14,7 @@ const IssueBook = () => {
   const availableBooks = useMemo(() => books.filter((book) => (book.quantity ?? 0) > 0), [books]);
   const issueRecords = books.flatMap((book) =>
     (book.issuedTo || []).map((issue, index) => ({
-      id: `${book.id}-${index}`,
+      id: `${book._id}-${index}`,
       bookName: book.name,
       category: book.category,
       ...issue,
@@ -34,9 +34,8 @@ const IssueBook = () => {
       return;
     }
 
-    const member = members.find((item) => item.id === Number(selectedMember));
-    const book = books.find((item) => item.id === Number(selectedBook));
-
+const member = members.find((item) => item._id === selectedMember);
+const book = books.find((item) => item._id === selectedBook);
     if (!member || !book) {
       showToast("error", "The selected record is no longer available.");
       return;
@@ -47,7 +46,7 @@ const IssueBook = () => {
       return;
     }
 
-    issueBook(Number(selectedBook), member.name);
+    issueBook(selectedBook, member.name);
     showToast("success", `${book.name} issued to ${member.name}.`);
     setSelectedBook("");
     setSelectedMember("");
@@ -84,7 +83,7 @@ const IssueBook = () => {
             <select id="book-select" value={selectedBook} onChange={(event) => setSelectedBook(event.target.value)}>
               <option value="">Choose an available book</option>
               {availableBooks.map((book) => (
-                <option key={book.id} value={book.id}>
+                <option key={book._id} value={book._id}>
                   {book.name} - {book.quantity ?? 0} copies available
                 </option>
               ))}
@@ -96,7 +95,7 @@ const IssueBook = () => {
             <select id="member-select" value={selectedMember} onChange={(event) => setSelectedMember(event.target.value)}>
               <option value="">Choose a member</option>
               {members.map((member) => (
-                <option key={member.id} value={member.id}>{member.name}</option>
+                <option key={member._id} value={member._id}>{member.name}</option>
               ))}
             </select>
           </div>

@@ -8,19 +8,19 @@ const ReturnBook = () => {
   const [notification, setNotification] = useState(null);
   const [pendingReturn, setPendingReturn] = useState(null);
 
-  const issuedRecords = useMemo(
-    () =>
-      books.flatMap((book) =>
-        (book.issuedTo || []).map((issue, index) => ({
-          id: `${book.id}-${index}`,
-          bookId: book.id,
-          bookName: book.name,
-          category: book.category,
-          ...issue,
-        }))
-      ),
-    [books]
-  );
+const issuedRecords = useMemo(
+  () =>
+    books.flatMap((book) =>
+      (book.issuedTo || []).map((issue, index) => ({
+        id: `${book._id}-${index}`,
+        bookId: book._id,
+        bookName: book.name,
+        category: book.category,
+        ...issue,
+      }))
+    ),
+  [books]
+);
 
   const showToast = (type, message) => {
     setNotification({ type, message });

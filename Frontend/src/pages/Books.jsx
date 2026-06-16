@@ -48,15 +48,19 @@ const Books = () => {
   };
 
   const handleDeleteBook = (id) => {
-    deleteBook(id);
-    showToast("success", "Book removed from the catalog.");
-  };
+  console.log("Delete ID:", id);
 
-  const handleUpdateBook = (updatedBook) => {
-    updateBook(updatedBook);
-    setEditingBook(null);
-    showToast("success", "Book details updated.");
-  };
+  deleteBook(id);
+  showToast("success", "Book removed from the catalog.");
+};
+
+const handleUpdateBook = (updatedBook) => {
+  console.log("Updated Book:", updatedBook);
+
+  updateBook(updatedBook);
+  setEditingBook(null);
+  showToast("success", "Book details updated.");
+};
 
   const columns = [
     { key: "name", label: "Title" },
@@ -150,7 +154,7 @@ const Books = () => {
                   <button className="btn-secondary btn-sm" onClick={() => setEditingBook(book)}>
                     <Edit3 size={15} /> Edit
                   </button>
-                  <button className="btn-danger btn-sm" onClick={() => handleDeleteBook(book.id)}>
+                  <button className="btn-danger btn-sm" onClick={() => handleDeleteBook(book._id)}>
                     <Trash2 size={15} /> Delete
                   </button>
                 </div>

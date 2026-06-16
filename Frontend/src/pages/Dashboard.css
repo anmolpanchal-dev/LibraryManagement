@@ -191,3 +191,92 @@
     width: 100%;
   }
 }
+
+/* =========================
+   Analytics Section
+========================= */
+
+.analytics-panel {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 1rem;
+}
+
+
+.analytics-content {
+  width: 100%;
+  display: grid;
+  margin-top: 20px;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1rem;
+}
+
+
+/* Left side cards */
+
+.analytics-left {
+  display: grid;
+  gap: 1rem;
+}
+
+
+.analytics-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  background: var(--surface-strong);
+  transition: transform 0.2s ease;
+}
+
+
+.analytics-card:hover {
+  transform: translateY(-3px);
+}
+
+
+.analytics-card h3 {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+
+.analytics-card strong {
+  font-size: 1.4rem;
+  color: var(--primary);
+}
+
+
+.analytics-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+
+/* Top categories */
+
+.analytics-category {
+  display: grid;
+  gap: 0.7rem;
+}
+
+
+.analytics-category p {
+  padding: 0.7rem;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+}
+
+
+/* Responsive */
+
+@media(max-width:900px){
+
+  .analytics-content{
+    grid-template-columns:1fr;
+  }
+
+}
