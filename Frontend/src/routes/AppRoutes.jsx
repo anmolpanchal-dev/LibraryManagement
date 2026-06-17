@@ -11,6 +11,7 @@ import RoleProtectedRoute from "./RoleProtectedRoute";
 import Signup from "../pages/Signup";
 import StudentDashboard from "../pages/StudentDashboard";
 import useAuth from "../hooks/useAuth";
+import StudentBooks from "../pages/StudentBooks";
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -74,19 +75,29 @@ function AppRoutes() {
   }
 />
       <Route path="/login" element={<Login />} />
-      <Route
- path="/signup"
- element={<Signup />}
-/>
-      <Route
+<Route
   path="/books"
   element={
     <ProtectedRoute>
       <RoleProtectedRoute
-        allowedRoles={["librarian"]}
+        allowedRoles={["librarian", "admin"]}
       >
         <Layout>
           <Books />
+        </Layout>
+      </RoleProtectedRoute>
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/student-books"
+  element={
+    <ProtectedRoute>
+      <RoleProtectedRoute
+        allowedRoles={["student"]}
+      >
+        <Layout>
+          <StudentBooks />
         </Layout>
       </RoleProtectedRoute>
     </ProtectedRoute>
