@@ -48,8 +48,12 @@ const deleteBook = async (req, res) => {
 
 const issueBook = async (req, res) => {
   try {
-    const { memberName } = req.body;
-
+    console.log("REQ BODY =>", req.body);
+const {
+  memberId,
+  memberName,
+  memberEmail,
+} = req.body;
     const book = await Book.findById(req.params.id);
 
     if (!book) return res.status(404).json({ message: "Book not found" });
@@ -67,8 +71,13 @@ const issueBook = async (req, res) => {
 
     book.quantity -= 1;
 
-    book.issuedTo.push({ memberName, date, time });
-
+book.issuedTo.push({
+  memberId,
+  memberName,
+  memberEmail,
+  date,
+  time,
+});
     await book.save();
 
     res.status(200).json(book);

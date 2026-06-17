@@ -1,23 +1,113 @@
 import { Routes, Route } from "react-router-dom";
-
+import Layout from "../components/Layout/Layout";
+import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "../pages/Dashboard";
 import Books from "../pages/Books";
 import Members from "../pages/Members";
-import IssueBook from "../pages/IssueBook";
-import IssuedBooks from "../pages/IssuedBooks";
-import ReturnBook from "../pages/ReturnBook";
+import IssueBook from "../pages/IssueBook"
+import ReturnBook from "../pages/ReturnBook"
+import Login from "../pages/Login";
+import RoleProtectedRoute from "./RoleProtectedRoute";
+import Signup from "../pages/Signup";
+import StudentDashboard from "../pages/StudentDashboard";
+import useAuth from "../hooks/useAuth";
 
-const AppRoutes = () => {
+function AppRoutes() {
+  const { user } = useAuth();
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/books" element={<Books />} />
-      <Route path="/members" element={<Members />} />
-      <Route path="/issue-book" element={<IssueBook />} />
-      <Route path="/issued-books" element={<IssuedBooks />} />
-      <Route path="/return-book" element={<ReturnBook />} />
+<Route
+  path="/"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        {user?.role === "student" ? (
+          <StudentDashboard />
+        ) : (
+          <Dashboard />
+        )}
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/dashboard"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        {user?.role === "student" ? (
+          <StudentDashboard />
+        ) : (
+          <Dashboard />
+        )}
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/issue-book"
+  element={
+    <ProtectedRoute>
+      <RoleProtectedRoute
+        allowedRoles={["librarian"]}
+      >
+        <Layout>
+          <IssueBook />
+        </Layout>
+      </RoleProtectedRoute>
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/return-book"
+  element={
+    <ProtectedRoute>
+      <RoleProtectedRoute
+        allowedRoles={["librarian"]}
+      >
+        <Layout>
+          <ReturnBook />
+        </Layout>
+      </RoleProtectedRoute>
+    </ProtectedRoute>
+  }
+/>
+      <Route path="/login" element={<Login />} />
+      <Route
+ path="/signup"
+ element={<Signup />}
+/>
+      <Route
+  path="/books"
+  element={
+    <ProtectedRoute>
+      <RoleProtectedRoute
+        allowedRoles={["librarian"]}
+      >
+        <Layout>
+          <Books />
+        </Layout>
+      </RoleProtectedRoute>
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/members"
+  element={
+    <ProtectedRoute>
+      <RoleProtectedRoute
+        allowedRoles={["librarian"]}
+      >
+        <Layout>
+          <Members />
+        </Layout>
+      </RoleProtectedRoute>
+    </ProtectedRoute>
+  }
+/>
     </Routes>
   );
-};
+}
 
 export default AppRoutes;

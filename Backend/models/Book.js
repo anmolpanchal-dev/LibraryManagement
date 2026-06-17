@@ -25,14 +25,15 @@ const bookSchema = new mongoose.Schema(
       required: true,
       default: 1,
     },
-
-    issuedTo: [
-      {
-        memberName: String,
-        date: String,
-        time: String,
-      },
-    ],
+issuedTo: [
+  {
+    memberId: String,
+    memberName: String,
+    memberEmail: String,
+    date: String,
+    time: String,
+  },
+],
   },
   {
     timestamps: true,

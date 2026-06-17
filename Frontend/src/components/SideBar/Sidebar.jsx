@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import {
   BookOpen,
   ChevronLeft,
@@ -11,15 +12,20 @@ import {
 } from "lucide-react";
 import "./Sidebar.css";
 
-const navItems = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/books", label: "Books", icon: BookOpen },
-  { to: "/members", label: "Members", icon: UsersRound },
-  { to: "/issue-book", label: "Issue Book", icon: ClipboardCheck },
-  { to: "/return-book", label: "Return Book", icon: RotateCcw },
-];
-
 const Sidebar = ({ collapsed, mobileOpen, onToggleCollapse, onCloseMobile }) => {
+  const { user } = useAuth();
+    const navItems =
+    user?.role === "librarian" || user?.role === "admin"
+      ? [
+          { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+          { to: "/books", label: "Books", icon: BookOpen },
+          { to: "/members", label: "Members", icon: UsersRound },
+          { to: "/issue-book", label: "Issue Book", icon: ClipboardCheck },
+          { to: "/return-book", label: "Return Book", icon: RotateCcw },
+        ]
+      : [
+          { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+        ];
   return (
     <aside className={`sidebar ${collapsed ? "is-collapsed" : ""} ${mobileOpen ? "is-open" : ""}`}>
       <div className="sidebar-brand">

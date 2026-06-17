@@ -46,7 +46,7 @@ const book = books.find((item) => item._id === selectedBook);
       return;
     }
 
-    issueBook(selectedBook, member.name);
+    issueBook(selectedBook, member);
     showToast("success", `${book.name} issued to ${member.name}.`);
     setSelectedBook("");
     setSelectedMember("");

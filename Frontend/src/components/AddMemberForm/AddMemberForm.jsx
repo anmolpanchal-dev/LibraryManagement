@@ -6,6 +6,7 @@ const initialForm = {
   name: "",
   email: "",
   phone: "",
+  password: "",
 };
 
 const AddMemberForm = ({ onAddMember, onDone }) => {
@@ -19,6 +20,11 @@ const AddMemberForm = ({ onAddMember, onDone }) => {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) newErrors.email = "Enter a valid email";
     if (!form.phone.trim()) newErrors.phone = "Phone is required";
     else if (!/^\d{10}$/.test(form.phone.replace(/\D/g, ""))) newErrors.phone = "Phone must be 10 digits";
+    if (!form.password.trim())
+  newErrors.password = "Password is required";
+else if (form.password.length < 6)
+  newErrors.password =
+    "Password must be at least 6 characters";
     return newErrors;
   };
 
@@ -68,7 +74,29 @@ const AddMemberForm = ({ onAddMember, onDone }) => {
           {errors.phone && <span className="error-message">{errors.phone}</span>}
         </div>
       </div>
+      <div className="form-group">
+  <label htmlFor="member-password">
+    Password
+  </label>
 
+  <input
+    id="member-password"
+    className={
+      errors.password ? "input-error" : ""
+    }
+    type="password"
+    name="password"
+    value={form.password}
+    onChange={handleChange}
+    placeholder="Enter temporary password"
+  />
+
+  {errors.password && (
+    <span className="error-message">
+      {errors.password}
+    </span>
+  )}
+</div>
       <div className="modal-actions">
         <button className="btn-primary" type="submit"><UserPlus size={17} /> Add member</button>
       </div>

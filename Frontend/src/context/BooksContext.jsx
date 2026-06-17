@@ -77,12 +77,14 @@ const updateBook = async (updatedBook) => {
   }
 };
   // 📚 Issue Book
-const issueBook = async (bookId, memberName) => {
+const issueBook = async (bookId, member) => {
   try {
     const response = await axios.put(
       `http://localhost:5000/api/books/${bookId}/issue`,
       {
-        memberName,
+        memberId: member._id,
+        memberName: member.name,
+        memberEmail: member.email,
       }
     );
 

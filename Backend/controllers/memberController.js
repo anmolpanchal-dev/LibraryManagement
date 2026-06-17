@@ -1,4 +1,6 @@
 const Member = require("../models/Member");
+const User = require("../models/userModel");
+const bcrypt = require("bcryptjs");
 
 const getMembers = async (req, res) => {
   try {
@@ -11,10 +13,40 @@ const getMembers = async (req, res) => {
 
 const addMember = async (req, res) => {
   try {
-    const member = await Member.create(req.body);
+    const { name, email, phone, password } =
+      req.body;
+
+    const existingUser =
+      await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({
+        message:
+          "Student account already exists",
+      });
+    }
+
+    const hashedPassword =
+      await bcrypt.hash(password, 10);
+
+    const member = await Member.create({
+      name,
+      email,
+      phone,
+    });
+
+    await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: "student",
+    });
+
     res.status(201).json(member);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: error.message,
+    });
   }
 };
 
