@@ -41,10 +41,10 @@ const Members = () => {
     setTimeout(() => setNotification(null), 2600);
   };
 
-  const handleAddMember = (memberData) => {
-    addMember(memberData);
-    showToast("success", "Member profile created.");
-  };
+const handleAddMember = async (member) => {
+  const result = await addMember(member);
+  return result;
+};
 
   const handleDeleteMember = (id) => {
     deleteMember(id);

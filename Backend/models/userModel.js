@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    studentId: {
+      type: String,
+      unique: true,
+    },
 
     borrowedBooks: [
       {

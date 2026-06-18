@@ -77,51 +77,94 @@ const updateBook = async (updatedBook) => {
   }
 };
   // 📚 Issue Book
-const issueBook = async (bookId, member) => {
+const issueBook = async (
+  bookId,
+  member,
+  customBookId = null
+) => {
+
+  console.log("🔥 ISSUE FUNCTION RUNNING");
+  console.log("MEMBER =>", member);
+  console.log("CUSTOM BOOK ID =>", customBookId);
+
+
   try {
+
     const response = await axios.put(
       `http://localhost:5000/api/books/${bookId}/issue`,
       {
         memberId: member._id,
         memberName: member.name,
         memberEmail: member.email,
+
+        studentId: member.studentId || null,
+
+        customBookId: customBookId || null
       }
     );
 
-    setBooks((prev) =>
-      prev.map((book) =>
+    console.log({
+  memberId: member._id,
+  memberName: member.name,
+  memberEmail: member.email,
+  studentId: member.studentId,
+  customBookId: customBookId
+});
+
+
+    setBooks((prev)=>
+      prev.map((book)=>
         book._id === bookId
-          ? response.data
-          : book
+        ? response.data
+        : book
       )
     );
 
-  } catch (error) {
-    console.error(error);
-  }
-};
 
+  } catch(error){
+
+    console.error(
+      "Issue Error:",
+      error
+    );
+
+  }
+
+};
   // 🔁 Return Book
-const returnBook = async (bookId, memberName) => {
+const returnBook = async (
+  bookId,
+  memberName
+) => {
+
   try {
+
     const response = await axios.put(
       `http://localhost:5000/api/books/${bookId}/return`,
       {
-        memberName,
+        memberName
       }
     );
 
-    setBooks((prev) =>
-      prev.map((book) =>
+
+    setBooks((prev)=>
+      prev.map((book)=>
         book._id === bookId
-          ? response.data
-          : book
+        ? response.data
+        : book
       )
     );
 
-  } catch (error) {
-    console.error(error);
+
+  } catch(error){
+
+    console.error(
+      "Return Error:",
+      error
+    );
+
   }
+
 };
 
   return (

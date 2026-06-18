@@ -343,7 +343,7 @@ const Login = () => {
   const [remember, setRemember]     = useState(false);
   const [loading, setLoading]       = useState(false);
   const [focusEmail, setFocusEmail] = useState(false);
-  const [focusPw, setFocusPw]       = useState(false);
+  const [focusPw, setFocusPw]       = useState(true);
   const [toast, setToast]           = useState(null);
   const [googleLoading, setGoogleLoading] = useState(false);
 
@@ -641,6 +641,8 @@ const Login = () => {
                   <span style={{ paddingLeft: 14, display: "flex", flexShrink: 0 }}>
                     <EmailIcon color={focusEmail ? tokens.primary : "#94a3b8"} />
                   </span>
+
+
                   <input
                     ref={emailRef}
                     className="lf-input"
@@ -651,17 +653,21 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     onFocus={() => setFocusEmail(true)}
                     onBlur={() => setFocusEmail(false)}
-                    style={{
-                      flex: 1,
-                      border: "none",
-                      background: "transparent",
-                      padding: "13px 14px",
-                      fontSize: 15,
-                      color: "#0f172a",
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      width: "100%",
-                    }}
+                      style={{
+    flex: 1,
+    border: "none",
+    outline: "none",   // 👈 add this
+    boxShadow: "none", // 👈 optional
+    background: "transparent",
+    padding: "13px 14px",
+    fontSize: 15,
+    color: "#0f172a",
+    width: "100%",
+  }}
                   />
+
+
+
                 </div>
               </div>
 
@@ -705,15 +711,16 @@ const Login = () => {
                     onFocus={() => setFocusPw(true)}
                     onBlur={() => setFocusPw(false)}
                     style={{
-                      flex: 1,
-                      border: "none",
-                      background: "transparent",
-                      padding: "13px 14px",
-                      fontSize: 15,
-                      color: "#0f172a",
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      width: "100%",
-                    }}
+    flex: 1,
+    border: "none",
+    outline: "none",   // 👈 add this
+    boxShadow: "none", // 👈 optional
+    background: "transparent",
+    padding: "13px 14px",
+    fontSize: 15,
+    color: "#0f172a",
+    width: "100%",
+  }}
                   />
                   <button
                     type="button"

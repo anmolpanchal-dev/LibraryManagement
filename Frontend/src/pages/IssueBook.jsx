@@ -1,5 +1,15 @@
 import { useMemo, useState } from "react";
-import { BookOpenCheck, CalendarDays, CheckCircle2, Clock3, SearchX, Send, UserRound, XCircle } from "lucide-react";
+import {
+  BookOpenCheck,
+  CalendarDays,
+  CheckCircle2,
+  Clock3,
+  SearchX,
+  Send,
+  UserRound,
+  XCircle,
+} from "lucide-react";
+
 import useBooks from "../hooks/useBooks";
 import useMembers from "../hooks/useMembers";
 import "./IssueBook.css";
@@ -7,64 +17,126 @@ import "./IssueBook.css";
 const IssueBook = () => {
   const { books = [], issueBook } = useBooks();
   const { members = [] } = useMembers();
-  const [selectedBook, setSelectedBook] = useState("");
-  const [selectedMember, setSelectedMember] = useState("");
+
+  const [studentId, setStudentId] = useState("");
+  const [bookId, setBookId] = useState("");
+
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedMember, setSelectedMember] = useState(null);
+
   const [notification, setNotification] = useState(null);
 
-  const availableBooks = useMemo(() => books.filter((book) => (book.quantity ?? 0) > 0), [books]);
+  const availableBooks = useMemo(
+    () => books.filter((book) => (book.quantity ?? 0) > 0),
+    [books],
+  );
+
   const issueRecords = books.flatMap((book) =>
     (book.issuedTo || []).map((issue, index) => ({
       id: `${book._id}-${index}`,
       bookName: book.name,
       category: book.category,
       ...issue,
-    }))
+    })),
   );
 
   const showToast = (type, message) => {
-    setNotification({ type, message });
+    setNotification({
+      type,
+      message,
+    });
+
     setTimeout(() => setNotification(null), 2600);
+  };
+
+  // Student search by LIB ID
+
+  const searchStudent = () => {
+    const member = members.find((item) => item.studentId === studentId);
+
+    if (!member) {
+      showToast("error", "Student not found");
+
+      return;
+    }
+
+    setSelectedMember(member);
+
+    showToast("success", `${member.name} selected`);
+  };
+
+  // Book select
+
+  const selectBook = (id) => {
+    const book = books.find((item) => item._id === id);
+
+    if (!book) {
+      showToast("error", "Book not found");
+
+      return;
+    }
+
+    setSelectedBook(book);
   };
 
   const handleIssue = (event) => {
     event.preventDefault();
 
-    if (!selectedBook || !selectedMember) {
-      showToast("error", "Select both a book and a member.");
+    if (!selectedMember) {
+      showToast("error", "Select student first");
+
       return;
     }
 
-const member = members.find((item) => item._id === selectedMember);
-const book = books.find((item) => item._id === selectedBook);
-    if (!member || !book) {
-      showToast("error", "The selected record is no longer available.");
+    if (!selectedBook) {
+      showToast("error", "Select book first");
+
       return;
     }
 
-    if ((book.quantity ?? 0) <= 0) {
-      showToast("error", "This book is currently unavailable.");
+    if ((selectedBook.quantity ?? 0) <= 0) {
+      showToast("error", "Book unavailable");
+
       return;
     }
 
-    issueBook(selectedBook, member);
-    showToast("success", `${book.name} issued to ${member.name}.`);
-    setSelectedBook("");
-    setSelectedMember("");
+    issueBook(selectedBook._id, selectedMember, bookId || null);
+
+    showToast(
+      "success",
+      `${selectedBook.name} issued to ${selectedMember.name}`,
+    );
+
+    setStudentId("");
+    setBookId("");
+
+    setSelectedBook(null);
+    setSelectedMember(null);
   };
 
   return (
     <div className="issue-book-page page-shell">
       <header className="page-header">
         <div>
-          <span className="page-kicker"><BookOpenCheck size={14} /> Circulation</span>
+          <span className="page-kicker">
+            <BookOpenCheck size={14} />
+            Circulation
+          </span>
+
           <h1>Issue Book</h1>
-          <p className="page-subtitle">Create a lending record with clear availability and member selection.</p>
+
+          <p className="page-subtitle">Create lending record</p>
         </div>
       </header>
 
       {notification && (
         <div className={`toast toast-${notification.type}`}>
-          {notification.type === "success" ? <CheckCircle2 size={18} /> : <XCircle size={18} />}
+          {notification.type === "success" ? (
+            <CheckCircle2 size={18} />
+          ) : (
+            <XCircle size={18} />
+          )}
+
           {notification.message}
         </div>
       )}
@@ -72,51 +144,100 @@ const book = books.find((item) => item._id === selectedBook);
       <section className="issue-layout">
         <form className="glass-card panel issue-form" onSubmit={handleIssue}>
           <div className="section-heading">
-            <div>
-              <h2>New issue record</h2>
-              <p>Select a title and assign it to a registered member.</p>
-            </div>
+            <h2>New Issue Record</h2>
           </div>
 
+          {/* STUDENT */}
+
           <div className="form-group">
-            <label htmlFor="book-select">Book</label>
-            <select id="book-select" value={selectedBook} onChange={(event) => setSelectedBook(event.target.value)}>
-              <option value="">Choose an available book</option>
+            <label>Student ID</label>
+
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder="LIB1001"
+                value={studentId}
+                onChange={(e) => setStudentId(e.target.value)}
+              />
+
+              <button type="button" onClick={searchStudent}>
+                Search
+              </button>
+            </div>
+
+            {selectedMember && (
+              <p>
+                Selected Student:
+                <strong>{selectedMember.name}</strong>
+              </p>
+            )}
+          </div>
+
+          {/* BOOK SELECT */}
+
+          <div className="form-group">
+            <label>Select Book</label>
+
+            <select
+              value={selectedBook?._id || ""}
+              onChange={(e) => selectBook(e.target.value)}
+            >
+              <option value="">Choose book</option>
+
               {availableBooks.map((book) => (
                 <option key={book._id} value={book._id}>
-                  {book.name} - {book.quantity ?? 0} copies available
+                  {book.name}
                 </option>
               ))}
             </select>
+
+            {selectedBook && (
+              <p>
+                Selected Book:
+                <strong>{selectedBook.name}</strong>
+              </p>
+            )}
           </div>
+
+          {/* OPTIONAL BOOK ID */}
 
           <div className="form-group">
-            <label htmlFor="member-select">Member</label>
-            <select id="member-select" value={selectedMember} onChange={(event) => setSelectedMember(event.target.value)}>
-              <option value="">Choose a member</option>
-              {members.map((member) => (
-                <option key={member._id} value={member._id}>{member.name}</option>
-              ))}
-            </select>
+            <label>Book ID (Optional)</label>
+
+            <input
+              type="text"
+              placeholder="BK1001"
+              value={bookId}
+              onChange={(e) => setBookId(e.target.value)}
+            />
           </div>
 
-          <button className="btn-primary" type="submit"><Send size={18} /> Issue Book</button>
+          <button className="btn-primary" type="submit">
+            <Send size={18} />
+            Issue Book
+          </button>
         </form>
 
         <aside className="glass-card panel circulation-summary">
-          <h2>Today’s desk</h2>
+          <h2>Today's Desk</h2>
+
           <div className="summary-card">
             <BookOpenCheck size={22} />
+
             <div>
               <strong>{availableBooks.length}</strong>
-              <p>Titles available</p>
+
+              <p>Available Books</p>
             </div>
           </div>
+
           <div className="summary-card">
             <UserRound size={22} />
+
             <div>
               <strong>{members.length}</strong>
-              <p>Registered members</p>
+
+              <p>Members</p>
             </div>
           </div>
         </aside>
@@ -124,11 +245,9 @@ const book = books.find((item) => item._id === selectedBook);
 
       <section className="glass-card panel">
         <div className="section-heading">
-          <div>
-            <h2>Issued books history</h2>
-            <p>Timestamped circulation records for active loans.</p>
-          </div>
-          <span className="badge badge-primary">{issueRecords.length} records</span>
+          <h2>Issued History</h2>
+
+          <span className="badge badge-primary">{issueRecords.length}</span>
         </div>
 
         {issueRecords.length > 0 ? (
@@ -137,21 +256,37 @@ const book = books.find((item) => item._id === selectedBook);
               <thead>
                 <tr>
                   <th>Book</th>
+
                   <th>Member</th>
+
                   <th>Date</th>
+
                   <th>Time</th>
                 </tr>
               </thead>
+
               <tbody>
-                {issueRecords.slice().reverse().map((record) => (
+                {issueRecords.reverse().map((record) => (
                   <tr key={record.id}>
                     <td>
                       <strong>{record.bookName}</strong>
+
                       <span>{record.category}</span>
                     </td>
+
                     <td>{record.memberName}</td>
-                    <td><span className="badge badge-primary"><CalendarDays size={14} /> {record.date}</span></td>
-                    <td><span className="badge badge-warning"><Clock3 size={14} /> {record.time}</span></td>
+
+                    <td>
+                      <CalendarDays size={14} />
+
+                      {record.date}
+                    </td>
+
+                    <td>
+                      <Clock3 size={14} />
+
+                      {record.time}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -159,9 +294,13 @@ const book = books.find((item) => item._id === selectedBook);
           </div>
         ) : (
           <div className="empty-state">
-            <div className="empty-illustration"><SearchX size={34} /></div>
+            <div className="empty-illustration">
+              <SearchX size={34} />
+            </div>
+
             <strong>No issued records yet</strong>
-            <p>Issue a book to start building circulation history.</p>
+
+            <p>Issue a book to start history</p>
           </div>
         )}
       </section>

@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { BookOpen, CheckCircle2, Edit3, Plus, Search, Trash2, XCircle } from "lucide-react";
 import useBooks from "../hooks/useBooks";
 import AddBookForm from "../components/AddBookForm/AddBookForm";
-import EditBookModal from "../components/EditBookModal/EditBookModal";
+import EditBookModal from "../components/Navbar/EditBookModal/EditBookModal";
 import DataTable from "../components/DataTable/DataTable";
 import "./Books.css";
 

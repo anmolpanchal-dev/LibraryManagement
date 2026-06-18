@@ -36,14 +36,31 @@ const addMember = async (member) => {
       ...prev,
       response.data,
     ]);
+
+    return {
+      success: true,
+      data: response.data,
+    };
+
   } catch (error) {
-    console.error(error);
+
+    return {
+      success: false,
+      message:
+        error.response?.data?.message ||
+        "Something went wrong"
+    };
+
   }
 };
+
+
+
 
   // ❌ Delete Member
 const deleteMember = async (id) => {
   try {
+
     await axios.delete(
       `http://localhost:5000/api/members/${id}`
     );
@@ -53,8 +70,9 @@ const deleteMember = async (id) => {
         (member) => member._id !== id
       )
     );
-  } catch (error) {
-    console.error(error);
+
+  } catch(error) {
+    console.log(error);
   }
 };
 
