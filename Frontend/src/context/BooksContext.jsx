@@ -1,186 +1,278 @@
-import axios from "axios";
 import {
   createContext,
   useState,
   useEffect,
 } from "react";
+
+import API from "../api/api";
+
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const BooksContext = createContext();
+
+
 const BooksProvider = ({ children }) => {
-const [books, setBooks] = useState([]);
-useEffect(() => {
-  fetchBooks();
-}, []);
 
-const fetchBooks = async () => {
-  try {
-    const response = await axios.get(
-      "http://localhost:5000/api/books"
-    );
+  const [books, setBooks] = useState([]);
 
-    setBooks(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-};
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+
+
+  // 📚 Get All Books
+  const fetchBooks = async () => {
+    try {
+
+      const response = await API.get("/books");
+
+      setBooks(response.data);
+
+    } catch (error) {
+
+      console.error(
+        "Fetch Books Error:",
+        error
+      );
+
+    }
+  };
+
+
+
   // ➕ Add Book
-const addBook = async (book) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/books",
-      book
-    );
+  const addBook = async (book) => {
 
-    setBooks((prev) => [
-      ...prev,
-      response.data,
-    ]);
-  } catch (error) {
-    console.error(error);
-  }
-};
+    try {
+
+      const response = await API.post(
+        "/books",
+        book
+      );
+
+
+      setBooks((prev) => [
+        ...prev,
+        response.data,
+      ]);
+
+
+    } catch(error){
+
+      console.error(
+        "Add Book Error:",
+        error
+      );
+
+    }
+  };
+
+
+
 
   // ❌ Delete Book
-const deleteBook = async (id) => {
-  try {
-    await axios.delete(
-      `http://localhost:5000/api/books/${id}`
-    );
+  const deleteBook = async (id) => {
 
-    setBooks((prev) =>
-      prev.filter(
-        (book) => book._id !== id
-      )
-    );
-  } catch (error) {
-    console.error(error);
-  }
-};
+    try {
+
+      await API.delete(
+        `/books/${id}`
+      );
+
+
+      setBooks((prev)=>
+        prev.filter(
+          (book)=>book._id !== id
+        )
+      );
+
+
+    } catch(error){
+
+      console.error(
+        "Delete Book Error:",
+        error
+      );
+
+    }
+
+  };
+
+
+
+
 
   // ✏️ Update Book
-const updateBook = async (updatedBook) => {
-  try {
-    const response = await axios.put(
-      `http://localhost:5000/api/books/${updatedBook._id}`,
-      updatedBook
-    );
+  const updateBook = async (updatedBook) => {
 
-    setBooks((prev) =>
-      prev.map((book) =>
-        book._id === updatedBook._id
+    try {
+
+      const response = await API.put(
+        `/books/${updatedBook._id}`,
+        updatedBook
+      );
+
+
+      setBooks((prev)=>
+        prev.map((book)=>
+          book._id === updatedBook._id
           ? response.data
           : book
-      )
-    );
-  } catch (error) {
-    console.error(error);
-  }
-};
-  // 📚 Issue Book
-const issueBook = async (
-  bookId,
-  member,
-  customBookId = null
-) => {
-
-  console.log("🔥 ISSUE FUNCTION RUNNING");
-  console.log("MEMBER =>", member);
-  console.log("CUSTOM BOOK ID =>", customBookId);
+        )
+      );
 
 
-  try {
+    } catch(error){
 
-    const response = await axios.put(
-      `http://localhost:5000/api/books/${bookId}/issue`,
-      {
-        memberId: member._id,
-        memberName: member.name,
-        memberEmail: member.email,
+      console.error(
+        "Update Book Error:",
+        error
+      );
 
-        studentId: member.studentId || null,
+    }
 
-        customBookId: customBookId || null
-      }
-    );
-
-    console.log({
-  memberId: member._id,
-  memberName: member.name,
-  memberEmail: member.email,
-  studentId: member.studentId,
-  customBookId: customBookId
-});
+  };
 
 
-    setBooks((prev)=>
-      prev.map((book)=>
-        book._id === bookId
-        ? response.data
-        : book
-      )
-    );
 
 
-  } catch(error){
 
-    console.error(
-      "Issue Error:",
-      error
-    );
+  // 📖 Issue Book
+  const issueBook = async (
+    bookId,
+    member,
+    customBookId=null
+  ) => {
 
-  }
 
-};
+    try {
+
+
+      const response = await API.put(
+        `/books/${bookId}/issue`,
+        {
+
+          memberId: member._id,
+
+          memberName: member.name,
+
+          memberEmail: member.email,
+
+          studentId:
+            member.studentId || null,
+
+          customBookId
+
+        }
+      );
+
+
+
+      setBooks((prev)=>
+        prev.map((book)=>
+
+          book._id === bookId
+          ? response.data
+          : book
+
+        )
+      );
+
+
+
+    } catch(error){
+
+      console.error(
+        "Issue Book Error:",
+        error
+      );
+
+    }
+
+  };
+
+
+
+
+
   // 🔁 Return Book
-const returnBook = async (
-  bookId,
-  memberName
-) => {
-
-  try {
-
-    const response = await axios.put(
-      `http://localhost:5000/api/books/${bookId}/return`,
-      {
-        memberName
-      }
-    );
+  const returnBook = async (
+    bookId,
+    memberName
+  ) => {
 
 
-    setBooks((prev)=>
-      prev.map((book)=>
-        book._id === bookId
-        ? response.data
-        : book
-      )
-    );
+    try {
 
 
-  } catch(error){
+      const response = await API.put(
+        `/books/${bookId}/return`,
+        {
+          memberName
+        }
+      );
 
-    console.error(
-      "Return Error:",
-      error
-    );
 
-  }
 
-};
+      setBooks((prev)=>
+        prev.map((book)=>
+
+          book._id === bookId
+          ? response.data
+          : book
+
+        )
+      );
+
+
+    } catch(error){
+
+      console.error(
+        "Return Book Error:",
+        error
+      );
+
+    }
+
+
+  };
+
+
+
 
   return (
+
     <BooksContext.Provider
+
       value={{
         books,
+
+        fetchBooks,
+
         addBook,
+
         deleteBook,
+
         updateBook,
+
         issueBook,
+
         returnBook,
       }}
+
     >
+
       {children}
+
     </BooksContext.Provider>
+
   );
+
+
 };
+
+
 
 export default BooksProvider;

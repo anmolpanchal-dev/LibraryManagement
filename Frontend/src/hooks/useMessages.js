@@ -1,40 +1,81 @@
 import { useState } from "react";
-import axios from "axios";
+import { API } from "../api/bookApi";
 
 
-const useMessages =()=>{
+const useMessages = () => {
+
+    const [messages, setMessages] = useState([]);
 
 
-const [messages,setMessages]=useState([]);
+
+    // 📩 Send Message
+    const sendMessage = async (data) => {
+
+        try {
+
+            const res = await API.post(
+                "/messages/send",
+                data
+            );
+
+
+            setMessages((prev) => [
+                ...prev,
+                res.data
+            ]);
+
+
+            return res.data;
+
+
+        } catch (error) {
+
+            console.error(
+                "Send Message Error:",
+                error
+            );
+
+        }
+
+    };
 
 
 
-const sendMessage = async(data)=>{
 
-const res =
-await axios.post(
-"http://localhost:5000/api/messages/send",
-data
-);
+    // 📥 Get Messages
+    const getMessages = async (userId) => {
+
+        try {
+
+            const res = await API.get(
+                `/messages/${userId}`
+            );
 
 
-setMessages(prev=>[
-...prev,
-res.data
-]);
+            setMessages(res.data);
 
+
+        } catch (error) {
+
+            console.error(
+                "Get Messages Error:",
+                error
+            );
+
+        }
+
+    };
+
+
+
+
+    return {
+        messages,
+        sendMessage,
+        getMessages
+    };
 
 };
-
-
-
-return {
-messages,
-sendMessage
-};
-
-
-}
 
 
 export default useMessages;

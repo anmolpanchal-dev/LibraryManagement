@@ -1,110 +1,90 @@
-import axios from "axios";
-import {
-  createContext,
-  useState,
-  useEffect,
-} from "react";
+import { createContext, useState, useEffect } from "react";
+
+import API from "../api/api";
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const MembersContext = createContext();
 
 const MembersProvider = ({ children }) => {
-const [members, setMembers] = useState([]);
-useEffect(() => {
-  fetchMembers();
-}, []);
+  const [members, setMembers] = useState([]);
 
-const fetchMembers = async () => {
-  try {
-    const response = await axios.get(
-      "http://localhost:5000/api/members"
-    );
+  useEffect(() => {
+    fetchMembers();
+  }, []);
 
-    setMembers(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-};
+  // 📥 Get Members
+  const fetchMembers = async () => {
+    try {
+      const response = await API.get("/members");
+
+      setMembers(response.data);
+    } catch (error) {
+      console.error("Fetch Members Error:", error);
+    }
+  };
+
   // ➕ Add Member
-const addMember = async (member) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/members",
-      member
-    );
+  const addMember = async (member) => {
+    try {
+      const response = await API.post("/members", member);
 
-    setMembers((prev) => [
-      ...prev,
-      response.data,
-    ]);
+      setMembers((prev) => [...prev, response.data]);
 
-    return {
-      success: true,
-      data: response.data,
-    };
+      return {
+        success: true,
 
-  } catch (error) {
+        data: response.data,
+      };
+    } catch (error) {
+      return {
+        success: false,
 
-    return {
-      success: false,
-      message:
-        error.response?.data?.message ||
-        "Something went wrong"
-    };
-
-  }
-};
-
-
-
+        message: error.response?.data?.message || "Something went wrong",
+      };
+    }
+  };
 
   // ❌ Delete Member
-const deleteMember = async (id) => {
-  try {
+  const deleteMember = async (id) => {
+    try {
+      await API.delete(`/members/${id}`);
 
-    await axios.delete(
-      `http://localhost:5000/api/members/${id}`
-    );
-
-    setMembers((prev) =>
-      prev.filter(
-        (member) => member._id !== id
-      )
-    );
-
-  } catch(error) {
-    console.log(error);
-  }
-};
+      setMembers((prev) => prev.filter((member) => member._id !== id));
+    } catch (error) {
+      console.error("Delete Member Error:", error);
+    }
+  };
 
   // ✏️ Update Member
-const updateMember = async (
-  updatedMember
-) => {
-  try {
-    const response = await axios.put(
-      `http://localhost:5000/api/members/${updatedMember._id}`,
-      updatedMember
-    );
+  const updateMember = async (updatedMember) => {
+    try {
+      const response = await API.put(
+        `/members/${updatedMember._id}`,
 
-    setMembers((prev) =>
-      prev.map((member) =>
-        member._id === updatedMember._id
-          ? response.data
-          : member
-      )
-    );
-  } catch (error) {
-    console.error(error);
-  }
-};
+        updatedMember,
+      );
 
+      setMembers((prev) =>
+        prev.map((member) =>
+          member._id === updatedMember._id ? response.data : member,
+        ),
+      );
+    } catch (error) {
+      console.error("Update Member Error:", error);
+    }
+  };
 
   return (
     <MembersContext.Provider
       value={{
         members,
+
+        fetchMembers,
+
         addMember,
+
         deleteMember,
+
         updateMember,
       }}
     >
