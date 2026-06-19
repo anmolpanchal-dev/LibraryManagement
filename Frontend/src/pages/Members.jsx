@@ -153,14 +153,23 @@ const handleAddMember = async (member) => {
         )}
       </section>
 
-      {showAddModal && (
-        <div className="modal-overlay" role="dialog" aria-modal="true">
-          <div className="modal">
-            <AddMemberForm onAddMember={handleAddMember} onDone={() => setShowAddModal(false)} />
-            <button className="btn-secondary modal-close" onClick={() => setShowAddModal(false)}>Close</button>
-          </div>
-        </div>
-      )}
+{showAddModal && (
+  <div className="modal-overlay">
+    <div className="modal">
+      <AddMemberForm
+        onAddMember={handleAddMember}
+        onDone={() => setShowAddModal(false)}
+      />
+
+      <button
+        className="btn-secondary modal-close"
+        onClick={() => setShowAddModal(false)}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
 
       <EditMemberModal editingMember={editingMember} updateMember={handleUpdateMember} closeModal={() => setEditingMember(null)} />
     </div>

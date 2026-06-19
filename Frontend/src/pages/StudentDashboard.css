@@ -1,0 +1,311 @@
+/* =========================
+   STUDENT DASHBOARD
+========================= */
+
+.student-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}
+
+/* Header */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.page-header h1 {
+  margin-top: 12px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.page-subtitle {
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* Stats */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  padding: 24px;
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.stat-card svg {
+  color: #6366f1;
+  margin-bottom: 14px;
+}
+
+.stat-card h3 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  color: #0f172a;
+}
+
+.stat-card p {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Glass Effect */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  box-shadow:
+    0 10px 25px rgba(15, 23, 42, 0.08),
+    0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+/* Panel */
+
+.panel {
+  padding: 24px;
+}
+
+.section-heading {
+  margin-bottom: 20px;
+}
+
+.section-heading h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Table */
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.issue-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.issue-table thead {
+  background: #f8fafc;
+}
+
+.issue-table th {
+  text-align: left;
+  padding: 14px;
+  font-size: 0.9rem;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.issue-table td {
+  padding: 14px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.issue-table tbody tr {
+  transition: 0.2s ease;
+}
+
+.issue-table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+/* Empty State */
+
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.empty-state strong {
+  display: block;
+  font-size: 1.2rem;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #64748b;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .student-dashboard {
+    padding: 16px;
+  }
+
+  .page-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 20px;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .issue-table th,
+  .issue-table td {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+.dark .student-dashboard,
+[data-theme="dark"] .student-dashboard {
+  color: var(--text-primary);
+}
+
+/* Header */
+
+.dark .page-header h1,
+[data-theme="dark"] .page-header h1 {
+  color: var(--text-primary);
+}
+
+.dark .page-subtitle,
+[data-theme="dark"] .page-subtitle {
+  color: var(--text-secondary);
+}
+
+.dark .page-kicker,
+[data-theme="dark"] .page-kicker {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+}
+
+/* Glass Cards */
+
+.dark .glass-card,
+[data-theme="dark"] .glass-card {
+  background: rgba(30, 41, 59, 0.75);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Section Heading */
+
+.dark .section-heading h2,
+[data-theme="dark"] .section-heading h2 {
+  color: var(--text-primary);
+}
+
+/* Stats */
+
+.dark .stat-card h3,
+[data-theme="dark"] .stat-card h3 {
+  color: var(--text-primary);
+}
+
+.dark .stat-card p,
+[data-theme="dark"] .stat-card p {
+  color: var(--text-secondary);
+}
+
+.dark .stat-card svg,
+[data-theme="dark"] .stat-card svg {
+  color: var(--primary);
+}
+
+.dark .stat-card:hover,
+[data-theme="dark"] .stat-card:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Table */
+
+.dark .issue-table thead,
+[data-theme="dark"] .issue-table thead {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.dark .issue-table th,
+[data-theme="dark"] .issue-table th {
+  color: var(--text-secondary);
+
+  border-bottom-color: var(--border-color);
+}
+
+.dark .issue-table td,
+[data-theme="dark"] .issue-table td {
+  color: var(--text-primary);
+
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .issue-table tbody tr:hover,
+[data-theme="dark"] .issue-table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.08);
+}
+
+/* Empty State */
+
+.dark .empty-state strong,
+[data-theme="dark"] .empty-state strong {
+  color: var(--text-primary);
+}
+
+.dark .empty-state p,
+[data-theme="dark"] .empty-state p {
+  color: var(--text-secondary);
+}
+
+/* Scrollbar */
+
+.dark .table-scroll::-webkit-scrollbar,
+[data-theme="dark"] .table-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.dark .table-scroll::-webkit-scrollbar-thumb,
+[data-theme="dark"] .table-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 999px;
+}

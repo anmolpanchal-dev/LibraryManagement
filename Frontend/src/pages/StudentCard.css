@@ -201,17 +201,48 @@
 }
 
 .detail-info p {
-  margin: 0;
 
-  padding: 14px;
+  display:flex;
+  align-items:center;
+  gap:14px;
 
-  border-radius: 14px;
+  padding:16px;
 
-  background: #f8fafc;
+  border-radius:16px;
 
-  border: 1px solid #e2e8f0;
+  background:var(--surface-strong);
 
-  color: #334155;
+  border:1px solid var(--border-color);
+
+}
+
+
+.detail-info svg {
+
+  color:var(--primary);
+
+  flex-shrink:0;
+}
+
+
+.detail-info span {
+
+  display:grid;
+
+  gap:4px;
+
+  color:var(--text-secondary);
+
+  font-size:.85rem;
+}
+
+
+.detail-info strong {
+
+  color:var(--text-primary);
+
+  font-size:.95rem;
+
 }
 
 /* Issued Books */
@@ -390,4 +421,201 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* =========================
+   DARK MODE FIX
+========================= */
+
+
+.dark .student-card-page,
+[data-theme="dark"] .student-card-page {
+  color: var(--text-primary);
+}
+
+
+/* Header */
+
+.dark .page-header h1,
+[data-theme="dark"] .page-header p {
+  color: var(--text-secondary);
+}
+
+
+/* Search */
+
+.dark .student-search,
+[data-theme="dark"] .student-search {
+
+  background: var(--surface-strong);
+  border-color: var(--border-color);
+}
+
+
+.dark .student-search input,
+[data-theme="dark"] .student-search input {
+
+  color: var(--text-primary);
+}
+
+
+.dark .student-search input::placeholder {
+  color: var(--text-secondary);
+}
+
+
+
+/* Cards */
+
+.dark .student-mini-card,
+[data-theme="dark"] .student-mini-card {
+
+
+  background: var(--surface);
+  border-color: var(--border-color);
+
+  box-shadow:
+  0 8px 25px rgba(0,0,0,.25);
+}
+
+
+.dark .student-mini-card h3,
+[data-theme="dark"] .student-mini-card h3 {
+
+  color: var(--text-primary);
+}
+
+
+.dark .student-mini-card span,
+[data-theme="dark"] .student-mini-card span {
+
+  color: var(--text-secondary);
+}
+
+
+
+/* Detail */
+
+.dark .student-detail,
+[data-theme="dark"] .student-detail {
+
+  background: var(--surface);
+  border-color: var(--border-color);
+}
+
+
+.dark .detail-header h2,
+[data-theme="dark"] .detail-header h2 {
+
+  color: var(--text-primary);
+}
+
+
+.dark .detail-header p {
+  color: var(--text-secondary);
+}
+
+
+.dark .detail-info p,
+[data-theme="dark"] .detail-info p {
+
+  background: var(--surface-strong);
+
+  border-color: var(--border-color);
+
+  color: var(--text-secondary);
+}
+
+
+
+/* Issued books */
+
+.dark .issued-item,
+[data-theme="dark"] .issued-item {
+
+  background: var(--surface-strong);
+
+  border-color: var(--border-color);
+}
+
+
+.dark .issued-item strong {
+  color: var(--text-primary);
+}
+
+
+.dark .issued-item p,
+.dark .issued-item span {
+
+  color: var(--text-secondary);
+}
+
+
+
+/* Modal */
+
+.dark .confirm-modal,
+[data-theme="dark"] .confirm-modal {
+
+  background: var(--surface);
+
+  color: var(--text-primary);
+}
+
+
+.dark .confirm-modal p {
+  color: var(--text-secondary);
+}
+
+
+.dark .btn-secondary {
+
+  background: var(--surface-strong);
+
+  color: var(--text-primary);
+}
+
+
+
+/* Back button hover */
+
+.dark .back-btn:hover {
+
+  opacity:.9;
+}
+
+
+
+@media(max-width:768px){
+
+  .student-card-page{
+    padding:12px;
+  }
+
+
+  .student-mini-card{
+    padding:18px;
+  }
+
+
+  .student-detail{
+    padding:18px;
+  }
+
+
+  .detail-info{
+    grid-template-columns:1fr;
+  }
+
+
+  .modal-actions{
+
+    flex-direction:column;
+  }
+
+
+  .modal-actions button{
+    width:100%;
+  }
+
 }

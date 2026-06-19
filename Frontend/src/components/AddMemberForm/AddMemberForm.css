@@ -1,8 +1,161 @@
 .add-member-form {
+
+  width: 100%;
+
+  padding: 2.2rem;
+
+  border-radius: 28px;
+
+  background: rgba(255,255,255,.88);
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  border: 1px solid rgba(255,255,255,.25);
+
+  box-shadow:
+    0 20px 60px rgba(15,23,42,.12);
+
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* =========================
+   FORM HEADER
+========================= */
+
+.add-member-form h2 {
+  margin-top: .35rem;
+}
+
+.add-member-form .page-kicker {
+  color: var(--primary);
+}
+
+/* =========================
+   GRID
+========================= */
+
+.add-member-form .form-grid.two {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
   gap: 1rem;
 }
-.hint-text{
-  font-size:12px;
-  margin-top:6px;
-  color:#64748b;
+
+/* =========================
+   INPUTS
+========================= */
+
+.add-member-form input {
+
+  width: 100%;
+
+  height: 50px;
+
+  padding: 0 14px;
+
+  border-radius: 14px;
+
+  border: 1px solid var(--border-color);
+
+  background: var(--surface);
+
+  transition: .2s;
+}
+
+.add-member-form input:focus {
+
+  outline: none;
+
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 4px rgba(99,102,241,.12);
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.error-message {
+
+  display: block;
+
+  margin-top: 6px;
+
+  color: #ef4444;
+
+  font-size: .8rem;
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+/* =========================
+   HINT
+========================= */
+
+.hint-text {
+
+  margin-top: 6px;
+
+  font-size: .8rem;
+
+  color: var(--text-secondary);
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.add-member-form .btn-primary {
+
+  width: 100%;
+
+  height: 52px;
+
+  border-radius: 14px;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+
+.dark .add-member-form,
+[data-theme="dark"] .add-member-form {
+
+  background: rgba(30,41,59,.88);
+
+  border-color: rgba(255,255,255,.08);
+}
+
+.dark .add-member-form input,
+[data-theme="dark"] .add-member-form input {
+
+  background: var(--surface-strong);
+
+  border-color: var(--border-color);
+
+  color: var(--text-primary);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .add-member-form {
+
+    padding: 1.25rem;
+  }
+
+  .add-member-form .form-grid.two {
+
+    grid-template-columns: 1fr;
+  }
 }

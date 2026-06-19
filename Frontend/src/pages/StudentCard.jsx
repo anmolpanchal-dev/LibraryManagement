@@ -10,6 +10,9 @@ import {
   Search,
   ArrowLeft,
   RotateCcw,
+  Mail,
+  Phone,
+  BookMarked,
 } from "lucide-react";
 
 import "./StudentCard.css";
@@ -114,19 +117,34 @@ const StudentCard = () => {
           </div>
 
           <div className="detail-info">
-            <p>
-              📧 {selectedStudent.email}
-            </p>
 
-            <p>
-              📞 {selectedStudent.phone}
-            </p>
+  <p>
+    <Mail size={18}/>
+    <span>
+      Email
+      <strong>{selectedStudent.email}</strong>
+    </span>
+  </p>
 
-            <p>
-              📚 Total Issued :
-              {issuedBooks.length}
-            </p>
-          </div>
+
+  <p>
+    <Phone size={18}/>
+    <span>
+      Phone
+      <strong>{selectedStudent.phone}</strong>
+    </span>
+  </p>
+
+
+  <p>
+    <BookMarked size={18}/>
+    <span>
+      Issued Books
+      <strong>{issuedBooks.length}</strong>
+    </span>
+  </p>
+
+</div>
 
           <h3>Issued Books</h3>
 

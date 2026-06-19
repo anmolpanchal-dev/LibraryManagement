@@ -1,7 +1,7 @@
 import { BookOpen, User, Clock, Library } from "lucide-react";
 import useAuth from "../hooks/useAuth";
 import useBooks from "../hooks/useBooks";
-// import "./StudentDashboard.css";
+import "./StudentDashboard.css";
 
 const StudentDashboard = () => {
   const { user } = useAuth();

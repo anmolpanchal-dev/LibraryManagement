@@ -1,5 +1,5 @@
 import "./EditBookModal.css";
-import EditBookForm from "../../EditBookForm/EditBookForm";
+import EditBookForm from "../EditBookForm/EditBookForm";
 
 const EditBookModal = ({
   editingBook,

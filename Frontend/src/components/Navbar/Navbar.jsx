@@ -34,11 +34,6 @@ const Navbar = ({ onMenuClick }) => {
       </button>
 
       <div className="nav-search">
-        <Search size={18} />
-        <input
-          aria-label="Search library"
-          placeholder="Search books, members, records..."
-        />
       </div>
 
       <div className="navbar-actions">
