@@ -75,7 +75,7 @@ const handleUpdateBook = (updatedBook) => {
         <div>
           <span className="page-kicker"><BookOpen size={14} /> Catalog</span>
           <h1>Books Management</h1>
-          <p className="page-subtitle">Search, curate, and maintain an enterprise-ready library catalog.</p>
+          <p className="page-subtitle">Search, curate, and maintain an Campus Library catalog.</p>
         </div>
         <button className="btn-primary" onClick={() => setShowAddModal(true)}>
           <Plus size={18} /> Add Book

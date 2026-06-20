@@ -129,7 +129,7 @@ const Dashboard = () => {
           <h1>Circulation intelligence for modern institutions.</h1>
           <p className="page-subtitle">
             Monitor inventory health, member activity, and lending operations
-            from a calm, enterprise-grade workspace.
+            from a calm, Campus Library workspace.
           </p>
         </div>
         <div className="hero-metric glass-card">

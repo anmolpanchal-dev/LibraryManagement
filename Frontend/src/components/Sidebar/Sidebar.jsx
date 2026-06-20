@@ -85,7 +85,7 @@ const Sidebar = ({
           <div className="brand-copy">
             <strong>LibraFlow</strong>
 
-            <span>Enterprise LMS</span>
+            <span>Campus Library System</span>
           </div>
         )}
       </div>

@@ -430,7 +430,7 @@ const Login = () => {
               margin: "0 auto 40px",
               fontWeight: 400,
             }}>
-              The enterprise library platform built for institutions that move fast — catalogue, track, and deliver knowledge at scale.
+              The Campus library platform built for institutions that move fast — catalogue, track, and deliver knowledge at scale.
             </p>
 
             {/* Feature pills */}
@@ -475,7 +475,7 @@ const Login = () => {
             fontWeight: 500,
             letterSpacing: "0.06em",
           }}>
-            ENTERPRISE LIBRARY MANAGEMENT
+            Campus LIBRARY MANAGEMENT
           </div>
         </div>
 
