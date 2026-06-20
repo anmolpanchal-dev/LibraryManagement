@@ -1,9 +1,48 @@
+/* ==========================================================================
+   THEME CONSTANTS & ROOT VARIABLES (Light Theme Default)
+   ========================================================================== */
+:root {
+   
+  --bg-surface: #ffffff;
+  --bg-surface-strong: #f8fafc;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --primary: #4f46e5;
+  --primary-soft: rgba(79, 70, 229, 0.1);
+  --hover-row: rgba(79, 70, 229, 0.02);
+  --shadow-panel: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* ==========================================================================
+   DARK THEME SYSTEM & CLASS HOOKS (Symmetrical Variables)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+  }
+}
+
+.dark, [data-theme="dark"] {
+  --bg-surface: #1e293b;
+  --bg-surface-strong: #0f172a;
+  --border-color: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --primary: #6366f1;
+  --primary-soft: rgba(99, 102, 241, 0.15);
+  --hover-row: rgba(99, 102, 241, 0.04);
+  --shadow-panel: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   DESKTOP CORE STRUCTURE
+   ========================================================================== */
 .issue-book-page {
   display: grid;
   gap: 1.5rem;
   width: 100%;
+  max-width: 100%;
 }
-
 
 .issue-layout {
   display: grid;
@@ -12,27 +51,22 @@
   align-items: start;
 }
 
-
-/* FORM */
-
+/* FORM LAYOUT CONTROLS */
 .issue-form {
   display: grid;
   gap: 1.25rem;
 }
-
 
 .form-group {
   display: grid;
   gap: 0.5rem;
 }
 
-
 .form-group label {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
 }
-
 
 .form-group input,
 .form-group select {
@@ -41,68 +75,54 @@
   padding: 0 14px;
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  background: var(--surface);
+  background: var(--bg-surface);
   color: var(--text-primary);
   outline: none;
-  transition: .2s ease;
+  transition: background-color 0.3s ease, border-color 0.2s ease, color 0.3s ease;
 }
-
 
 .form-group input:focus,
 .form-group select:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+  box-shadow: 0 0 0 3px var(--primary-soft);
 }
 
-
-
-/* SEARCH STUDENT */
-
+/* SEARCH BUTTON BOX */
 .search-box {
   display: flex;
-  gap: .7rem;
+  gap: 0.7rem;
 }
-
 
 .search-box input {
   flex: 1;
 }
-
 
 .search-box button {
   min-width: 90px;
   border: none;
   border-radius: 12px;
   background: var(--primary);
-  color: white;
+  color: #ffffff;
   cursor: pointer;
   font-weight: 600;
-  transition: .2s;
+  transition: transform 0.2s, background-color 0.2s;
 }
-
 
 .search-box button:hover {
   transform: translateY(-1px);
+  filter: brightness(1.1);
 }
-
-
-
-/* SELECTED INFO */
 
 .form-group p {
   display: flex;
-  gap: .4rem;
+  gap: 0.4rem;
   flex-wrap: wrap;
   margin: 0;
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
-
-
-
-/* SUMMARY */
-
+/* DESK COUNTERS/STICKY SUMMARY */
 .circulation-summary {
   display: grid;
   gap: 1rem;
@@ -110,157 +130,247 @@
   top: 90px;
 }
 
-
 .summary-card {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 1rem;
   border-radius: 16px;
-  background: var(--surface-strong);
+  background: var(--bg-surface-strong);
   border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-
 
 .summary-card svg {
   color: var(--primary);
 }
 
-
 .summary-card strong {
   font-size: 1.6rem;
   line-height: 1;
+  color: var(--text-primary);
 }
-
-
-
-
-/* BUTTON */
 
 .btn-primary {
   height: 46px;
   border-radius: 14px;
-  border:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.5rem;
-  cursor:pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
-
-
-
-/* TABLE */
-
-.table-scroll {
-  width:100%;
-  overflow-x:auto;
-  border-radius:14px;
+.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 
+/* ==========================================================================
+   DESKTOP VIEW HISTORY DATA TABLE 
+   ========================================================================== */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-panel);
+  background: var(--bg-surface);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
 
 .issue-table {
-  width:100%;
-  min-width:650px;
-  border-collapse:collapse;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+  background: transparent;
 }
-
 
 .issue-table th {
-  text-align:left;
-  padding:14px;
-  font-size:.85rem;
+  background: var(--bg-surface-strong);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
-
 
 .issue-table td {
-  padding:14px;
-  border-top:1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  vertical-align: middle;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
-
-.issue-table td:first-child {
-  display:grid;
-  gap:3px;
+.issue-table tr:last-child td {
+  border-bottom: none;
 }
 
-
-.issue-table td:first-child span {
-  color:var(--text-secondary);
-  font-size:.82rem;
+.issue-table tr:hover td {
+  background-color: var(--hover-row);
 }
 
-
-.issue-table td svg {
-  vertical-align:middle;
-  margin-right:5px;
-  color:var(--primary);
+.datetime-inline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
+.datetime-inline svg {
+  color: var(--primary);
+}
 
+.row-title-group {
+  display: grid;
+  gap: 2px;
+}
 
+.row-title-group span {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
 
-/* TABLET */
-
-@media(max-width:1000px){
-
+/* ==========================================================================
+   TABLET CONTROLS LAYOUT OVERRIDES (max-width: 1000px)
+   ========================================================================== */
+@media (max-width: 1000px) {
   .issue-layout {
-    grid-template-columns:1fr;
+    grid-template-columns: 1fr;
   }
-
 
   .circulation-summary {
-    position:static;
-    grid-template-columns:repeat(2,1fr);
+    position: static;
+    grid-template-columns: repeat(2, 1fr);
   }
-
 }
 
-
-
-
-/* MOBILE */
-
-@media(max-width:600px){
-
+/* ==========================================================================
+   MOBILE SCREEN NO-RED-SPACE CARD STYLES ENGINE (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
   .issue-book-page {
-    gap:1rem;
+    gap: 1rem;
   }
-
 
   .search-box {
-    flex-direction:column;
+    flex-direction: column;
   }
-
 
   .search-box button {
-    height:44px;
+    height: 44px;
+    width: 100%;
   }
-
 
   .circulation-summary {
-    grid-template-columns:1fr;
+    grid-template-columns: 1fr;
   }
-
 
   .summary-card {
-    padding:.85rem;
+    padding: 0.85rem;
   }
-
-
-  .page-header h1 {
-    font-size:1.5rem;
-  }
-
-
-  .issue-table {
-    min-width:600px;
-  }
-
 
   .btn-primary {
-    width:100%;
+    width: 100%;
   }
 
+  /* -------------------------------
+     Automatic Card Transformation 
+     ------------------------------- */
+  .table-wrapper {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .issue-table, 
+  .issue-table thead, 
+  .issue-table tbody, 
+  .issue-table th, 
+  .issue-table td, 
+  .issue-table tr {
+    display: block;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* Structural header removal */
+  .issue-table thead tr {
+    display: none;
+  }
+
+  /* Converting rows into premium stand-alone cards */
+  .issue-table tr {
+    background: var(--bg-surface) !important; /* Force overrides dynamic layout background conflicts */
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-panel);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .issue-table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Responsive Cell layout - pushes data labels left and values right */
+  .issue-table td {
+    border: none !important;
+    border-bottom: 1px dashed var(--border-color) !important;
+    padding: 0.7rem 0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    text-align: right !important;
+    background: transparent !important; /* Clean overlays */
+  }
+
+  .issue-table td:last-child {
+    border-bottom: none !important;
+  }
+
+  /* First column (Book Title Container Layout Overrides) */
+  .issue-table td.book-title-cell-override {
+    border-bottom: 1px solid var(--border-color) !important;
+    padding-bottom: 0.85rem !important;
+    margin-bottom: 0.4rem !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  /* Safe boundaries for dynamic right values text to avoid text-overlapping */
+  .td-content {
+    display: block;
+    max-width: 60%;
+    color: var(--text-primary);
+  }
+
+  .issue-table td.book-title-cell-override .td-content {
+    max-width: 100%;
+  }
+
+  /* Data labels generated through React HTML attributes */
+  .issue-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: left;
+    padding-right: 0.5rem;
+  }
+
+  /* Safe flag to strip text injection on Book Titles header cell */
+  .issue-table td.book-title-cell-override::before {
+    content: none !important;
+  }
 }

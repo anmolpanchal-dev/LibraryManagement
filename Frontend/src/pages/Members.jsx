@@ -109,12 +109,22 @@ const handleAddMember = async (member) => {
                 if (col.key === "name") {
                   return (
                     <div className="table-title-cell">
-                      <span className="member-avatar">{initials(member.name)}</span>
-                      <div>
-                        <strong>{member.name}</strong>
-                        <span>ID #{member._id}</span>
-                      </div>
-                    </div>
+
+  <span className="member-avatar">
+    {initials(member.name)}
+  </span>
+
+  <div className="member-info">
+
+    <strong>{member.name}</strong>
+
+    <span className="student-id">
+      ID #{member.studentId || "Generating..."}
+    </span>
+
+  </div>
+
+</div>
                   );
                 }
 

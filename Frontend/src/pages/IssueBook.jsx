@@ -243,67 +243,73 @@ const IssueBook = () => {
         </aside>
       </section>
 
-      <section className="glass-card panel">
-        <div className="section-heading">
-          <h2>Issued History</h2>
+{/* ... Baaki ka upar ka code bilkul same rahega ... */}
 
-          <span className="badge badge-primary">{issueRecords.length}</span>
-        </div>
+<section className="glass-card panel">
+  <div className="section-heading">
+    <h2>Issued History</h2>
+    <span className="badge badge-primary">{issueRecords.length}</span>
+  </div>
 
-        {issueRecords.length > 0 ? (
-          <div className="table-scroll">
-            <table className="issue-table">
-              <thead>
-                <tr>
-                  <th>Book</th>
+  {issueRecords.length > 0 ? (
+    <div className="table-wrapper"> {/* Class name changed from table-scroll to table-wrapper */}
+      <table className="issue-table">
+        <thead>
+          <tr>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
 
-                  <th>Member</th>
+        <tbody>
+          {issueRecords.reverse().map((record) => (
+            <tr key={record.id}>
+              {/* Added data-label and td-content wrapper */}
+              <td data-label="Book" className="book-title-cell-override">
+                <div className="td-content row-title-group">
+                  <strong>{record.bookName}</strong>
+                  <span>{record.category}</span>
+                </div>
+              </td>
 
-                  <th>Date</th>
+              <td data-label="Member">
+                <div className="td-content">
+                  {record.memberName}
+                </div>
+              </td>
 
-                  <th>Time</th>
-                </tr>
-              </thead>
+              <td data-label="Date">
+                <div className="td-content datetime-inline">
+                  <CalendarDays size={14} />
+                  {record.date}
+                </div>
+              </td>
 
-              <tbody>
-                {issueRecords.reverse().map((record) => (
-                  <tr key={record.id}>
-                    <td>
-                      <strong>{record.bookName}</strong>
+              <td data-label="Time">
+                <div className="td-content datetime-inline">
+                  <Clock3 size={14} />
+                  {record.time}
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (
+    <div className="empty-state">
+      <div className="empty-illustration">
+        <SearchX size={34} />
+      </div>
+      <strong>No issued records yet</strong>
+      <p>Issue a book to start history</p>
+    </div>
+  )}
+</section>
 
-                      <span>{record.category}</span>
-                    </td>
-
-                    <td>{record.memberName}</td>
-
-                    <td>
-                      <CalendarDays size={14} />
-
-                      {record.date}
-                    </td>
-
-                    <td>
-                      <Clock3 size={14} />
-
-                      {record.time}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="empty-state">
-            <div className="empty-illustration">
-              <SearchX size={34} />
-            </div>
-
-            <strong>No issued records yet</strong>
-
-            <p>Issue a book to start history</p>
-          </div>
-        )}
-      </section>
+{/* ... Baaki ka niche ka code same rahega ... */}
     </div>
   );
 };

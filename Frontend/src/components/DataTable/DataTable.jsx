@@ -2,14 +2,14 @@ import "./DataTable.css";
 
 const DataTable = ({ columns, data = [], renderActions, renderCell }) => {
   return (
-    <div className="table-scroll">
+    <div className="table-wrapper">
       <table className="data-table">
         <thead>
           <tr>
             {columns.map((col) => (
               <th key={col.key}>{col.label}</th>
             ))}
-            {renderActions && <th>Actions</th>}
+            {renderActions && <th className="actions-header">Actions</th>}
           </tr>
         </thead>
 
@@ -18,16 +18,25 @@ const DataTable = ({ columns, data = [], renderActions, renderCell }) => {
             data.map((row) => (
               <tr key={row._id}>
                 {columns.map((col) => (
-                  <td key={col.key}>
-                    {renderCell ? renderCell(row, col) : row?.[col.key] ?? "-"}
+                  /* Yahan data-label add kiya hai responsive labels ke liye */
+                  <td key={col.key} data-label={col.label}>
+                    <div className="td-content">
+                      {renderCell ? renderCell(row, col) : row?.[col.key] ?? "-"}
+                    </div>
                   </td>
                 ))}
-                {renderActions && <td>{renderActions(row)}</td>}
+                {renderActions && (
+                  <td data-label="Actions" className="actions-cell">
+                    <div className="td-content actions-wrapper">
+                      {renderActions(row)}
+                    </div>
+                  </td>
+                )}
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={columns.length + (renderActions ? 1 : 0)}>
+              <td colSpan={columns.length + (renderActions ? 1 : 0)} className="no-data-cell">
                 No data available
               </td>
             </tr>

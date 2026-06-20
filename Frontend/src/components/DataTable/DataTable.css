@@ -1,59 +1,209 @@
+/* ==========================================================================
+   THEME CONSTANTS & ROOT VARIABLES (Light Theme Default)
+   ========================================================================== */
+:root {
+    --bg-surface: #1e293b;
+    --bg-table-header: #0f172a;
+    --border-color: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --hover-row: rgba(99, 102, 241, 0.04);
+    --shadow-table: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  
+}
+
+/* ==========================================================================
+   DARK THEME ENGINE - SYSTEM & CLASS HOOKS (Resolved Conflict Selectors)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {--bg-surface: #ffffff;
+  --bg-table-header: #f8fafc;
+  --border-color: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --hover-row: rgba(242, 242, 247, 0.02);
+  --shadow-table: 0 4px 6px -1px rgba(216, 207, 207, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  }
+}
+
+/* Root level selector flat specification to avoid mobile overrides leak */
+.dark, [data-theme="dark"] {
+  --bg-surface: #1e293b;
+  --bg-table-header: #0f172a;
+  --border-color: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --hover-row: rgba(99, 102, 241, 0.04);
+  --shadow-table: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   DESKTOP CORE TABLE LAYOUT
+   ========================================================================== */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-table);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
 .data-table {
-  min-width: 760px;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
   background: transparent;
 }
 
-.data-table td:first-child,
-.data-table th:first-child {
-  padding-left: 1.1rem;
+.data-table th {
+  background: var(--bg-table-header);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.data-table td:last-child,
-.data-table th:last-child {
-  padding-right: 1.1rem;
+.data-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+  vertical-align: middle;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.table-title-cell {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-width: 0;
+.data-table tr:last-child td {
+  border-bottom: none;
 }
 
-.table-icon {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  border-radius: 12px;
-  color: var(--primary);
-  background: var(--primary-soft);
+.data-table tr:hover td {
+  background-color: var(--hover-row);
 }
 
-.table-title-cell strong {
-  display: block;
+/* Aligning Actions Header & Body cells to the right side for cleaner layout */
+.actions-header, .actions-cell {
+  text-align: right !important;
 }
 
-.table-title-cell span {
-  display: block;
-  color: var(--text-secondary);
-  font-size: 0.84rem;
-}
-
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-top: 1rem;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.pagination-actions {
-  display: flex;
-  align-items: center;
+.actions-wrapper {
+  display: inline-flex;
   gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.no-data-cell {
+  text-align: center;
+  padding: 3rem !important;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   MOBILE SCREEN CONFLICT-FREE CARD STYLES ENGINE (Max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Reset the parent table wrapper to prevent double bg nesting bugs */
+  .table-wrapper {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  /* Layout structure rules grid overrides */
+  .data-table, 
+  .data-table thead, 
+  .data-table tbody, 
+  .data-table th, 
+  .data-table td, 
+  .data-table tr {
+    display: block;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* Completely clear out table structural labels headers */
+  .data-table thead tr {
+    display: none; /* absolute position text leakage fixed */
+  }
+
+  /* Row blocks setup into Cards with strict dark mode surface inheritance */
+  .data-table tr {
+    background: var(--bg-surface) !important; /* Forces layout context stability */
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-table);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .data-table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Removing standard margins from cells */
+  .data-table td {
+    border: none !important;
+    border-bottom: 1px dashed var(--border-color) !important;
+    padding: 0.7rem 0 !important;
+    display: flex !important;
+    justify-content: space-between !important; /* Eliminates the middle empty gap completely */
+    align-items: center !important;
+    text-align: right !important;
+    background: transparent !important; /* Prevents desktop row hover leaks */
+  }
+
+  /* Separate structure rule for Title (First Column) */
+  .data-table td:first-child {
+    border-bottom: 1px solid var(--border-color) !important;
+    padding-bottom: 0.85rem !important;
+    margin-bottom: 0.5rem !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  /* Safe box fallback mechanics wrapper for cell layout data */
+  .td-content {
+    display: block !important;
+    max-width: 60% !important; /* Pushes text securely to ensure no overlaps */
+    color: var(--text-main);
+  }
+
+  .data-table td:first-child .td-content {
+    max-width: 100% !important;
+  }
+
+  /* Smart responsive text generation using HTML data-attributes */
+  .data-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: left;
+    padding-right: 0.5rem;
+  }
+
+  /* Wipe layout labels strings for the Header Card title selector block */
+  .data-table td:first-child::before {
+    content: none !important;
+  }
+
+  /* Full stretch configurations for action properties wrapper buttons inside card view */
+  .actions-cell {
+    justify-content: space-between !important;
+    padding-top: 0.85rem !important;
+    border-top: 1px dashed var(--border-color) !important;
+    margin-top: 0.5rem !important;
+    border-bottom: none !important; /* Clean footer block boundary inside card */
+  }
+  
+  .actions-wrapper {
+    width: auto;
+  }
 }
