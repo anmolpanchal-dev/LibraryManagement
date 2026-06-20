@@ -5,6 +5,8 @@ import AddBookForm from "../components/AddBookForm/AddBookForm";
 import EditBookModal from "../components/EditBookModal/EditBookModal";
 import DataTable from "../components/DataTable/DataTable";
 import "./Books.css";
+import { createPortal } from "react-dom";
+
 
 const PAGE_SIZE = 8;
 
@@ -178,14 +180,25 @@ const handleUpdateBook = (updatedBook) => {
         )}
       </section>
 
-      {showAddModal && (
-        <div className="modal-overlay" role="dialog" aria-modal="true">
-          <div className="modal">
-            <AddBookForm onAddBook={handleAddBook} onDone={() => setShowAddModal(false)} />
-            <button className="btn-secondary modal-close" onClick={() => setShowAddModal(false)}>Close</button>
-          </div>
-        </div>
-      )}
+
+{showAddModal &&
+  createPortal(
+    <div className="modal-overlay" role="dialog" aria-modal="true">
+      <div className="modal">
+        <AddBookForm
+          onAddBook={handleAddBook}
+          onDone={() => setShowAddModal(false)}
+        />
+        <button
+          className="btn-secondary modal-close"
+          onClick={() => setShowAddModal(false)}
+        >
+          Close
+        </button>
+      </div>
+    </div>,
+    document.body
+  )}
 
       <EditBookModal editingBook={editingBook} updateBook={handleUpdateBook} closeModal={() => setEditingBook(null)} />
     </div>

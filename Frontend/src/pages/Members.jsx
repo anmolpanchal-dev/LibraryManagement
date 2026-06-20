@@ -5,6 +5,7 @@ import DataTable from "../components/DataTable/DataTable";
 import AddMemberForm from "../components/AddMemberForm/AddMemberForm";
 import EditMemberModal from "../components/EditMemberModal/EditMemberModal";
 import "./Members.css";
+import { createPortal } from "react-dom";
 
 const PAGE_SIZE = 9;
 
@@ -163,23 +164,26 @@ const handleAddMember = async (member) => {
         )}
       </section>
 
-{showAddModal && (
-  <div className="modal-overlay">
-    <div className="modal">
-      <AddMemberForm
-        onAddMember={handleAddMember}
-        onDone={() => setShowAddModal(false)}
-      />
 
-      <button
-        className="btn-secondary modal-close"
-        onClick={() => setShowAddModal(false)}
-      >
-        Close
-      </button>
-    </div>
-  </div>
-)}
+{showAddModal &&
+  createPortal(
+    <div className="modal-overlay">
+      <div className="modal">
+        <AddMemberForm
+          onAddMember={handleAddMember}
+          onDone={() => setShowAddModal(false)}
+        />
+
+        <button
+          className="btn-secondary modal-close"
+          onClick={() => setShowAddModal(false)}
+        >
+          Close
+        </button>
+      </div>
+    </div>,
+    document.body
+  )}
 
       <EditMemberModal editingMember={editingMember} updateMember={handleUpdateMember} closeModal={() => setEditingMember(null)} />
     </div>
