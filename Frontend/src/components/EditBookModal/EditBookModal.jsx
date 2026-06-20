@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import "./EditBookModal.css";
 import EditBookForm from "../EditBookForm/EditBookForm";
 
@@ -8,7 +9,7 @@ const EditBookModal = ({
 }) => {
   if (!editingBook) return null;
 
-  return (
+  return createPortal(
     <div className="modal-overlay">
       <div className="modal-box">
         <EditBookForm
@@ -18,7 +19,8 @@ const EditBookModal = ({
           closeModal={closeModal}
         />
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
