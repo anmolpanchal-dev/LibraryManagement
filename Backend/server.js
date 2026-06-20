@@ -12,11 +12,13 @@ connectDB();
 
 const app = express();
 
+const cors = require("cors");
+
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://YOUR-VERCEL-APP.vercel.app"
+      "https://library-management-nu-gules.vercel.app",
     ],
     credentials: true,
   })
